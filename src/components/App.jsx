@@ -1,17 +1,36 @@
 import { ContactsList } from './ContactsList/ContactsList';
 import { Form } from './Form/Form';
 import { Filter } from './Filter/Filter';
-import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { Spinner } from './Spinner/Spinner';
+import { useEffect } from 'react';
+import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
 
 export const App = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div>
-      <h1>Phonebook</h1>
-      <Form />
-      {contacts.length > 0 ? (
+      {error ? (
+        <h1>Something went wrong, please reload the page.</h1>
+      ) : (
+        <>
+          <h1>Phonebook</h1>
+          <Form />
+        </>
+      )}
+
+      {!error && isLoading && <Spinner />}
+
+      {!isLoading && contacts.length > 0 ? (
         <>
           <h2>Your contacts</h2>
           <Filter />

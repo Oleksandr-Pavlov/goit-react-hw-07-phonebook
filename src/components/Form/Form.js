@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
-import { nanoid } from 'nanoid';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
+import { Notify } from 'notiflix';
 import css from '../Form/Form.module.css';
 
 export const Form = () => {
@@ -10,8 +10,7 @@ export const Form = () => {
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
-  const contactsId = nanoid();
+  const contacts = useSelector(selectContacts);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -37,7 +36,11 @@ export const Form = () => {
 
     const isExist = contacts.find(contact => contact.name === name)
 
-    if (isExist) return alert(`${name} is already in your contacts list.`);
+    if (isExist) {
+      setName('');
+      setNumber('');
+      return Notify.warning(`${name} is already in your contacts list.`)
+    }
 
     dispatch(addContact(name, number));
     setName('');
@@ -46,11 +49,10 @@ export const Form = () => {
 
   return (
     <form onSubmit={handleSubmit} className={css.form}>
-      <label htmlFor={contactsId}>
+      <label>
         <p>Name</p>
         <input
           value={name}
-          id={contactsId}
           onChange={handleChange}
           type="text"
           name="name"
@@ -59,11 +61,10 @@ export const Form = () => {
           required
         />
       </label>
-      <label htmlFor={contactsId}>
+      <label>
         <p>Number</p>
         <input
           value={number}
-          id={contactsId}
           onChange={handleChange}
           type="tel"
           name="number"
