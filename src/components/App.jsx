@@ -28,16 +28,16 @@ export const App = () => {
         </>
       )}
 
-      {!error && isLoading && <Spinner />}
+      {isLoading && <Spinner />}
 
-      {!isLoading && contacts.length > 0 ? (
+      {!isLoading && contacts.length === 0 && <h2>There are no contacts yet</h2>}
+
+      {contacts.length > 0 && (
         <>
           <h2>Your contacts</h2>
           <Filter />
           <ContactsList />
         </>
-      ) : (
-        <h2>There are no contacts yet</h2>
       )}
     </div>
   );

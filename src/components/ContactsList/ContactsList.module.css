@@ -3,7 +3,7 @@
 }
 
 .list li  {
-    max-width: 300px;
+    max-width: 400px;
     display: flex;
     align-items: center;
     justify-content: space-between;

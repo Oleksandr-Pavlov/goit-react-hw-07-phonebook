@@ -42,7 +42,7 @@ export const Form = () => {
       return Notify.warning(`${name} is already in your contacts list.`)
     }
 
-    dispatch(addContact(name, number));
+    dispatch(addContact({ name, number }));
     setName('');
     setNumber('');
   }
