@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { selectContacts, selectError, selectIsLoading } from 'redux/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchContacts } from 'redux/operations';
+import css from './App.module.css'
 
 export const App = () => {
   const contacts = useSelector(selectContacts);
@@ -18,7 +19,7 @@ export const App = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={css.wrapper}>
       {error ? (
         <h1>Something went wrong, please reload the page.</h1>
       ) : (

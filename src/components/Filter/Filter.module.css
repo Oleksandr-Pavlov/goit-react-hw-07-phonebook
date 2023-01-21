@@ -1,13 +1,10 @@
-.filter {
-  max-width: 500px;
-}
-
 .filter p {
   margin: 20px 0 10px;
+  text-align: center;
 }
 
 .filter input {
-  max-width: 250px;
+  width: 300px;
   height: 25px;
   border: 2px solid yellowgreen;
   border-radius: 5px;
